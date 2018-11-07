@@ -1,6 +1,12 @@
 # .emacs.d [WIP]
 > my emacs config
 
+## PREREQUISITES
+
+### INSTALL IOSEVKA FONT
+
+[HERE](./https://github.com/be5invis/Iosevka#installation)
+
 ## INSTALL
 
 ### BACKUP CURRENT CONFIG
