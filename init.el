@@ -1,4 +1,5 @@
-;; https://gist.github.com/huytd/6b785bdaeb595401d69adc7797e5c22c#file-init-el
+;;; folk of
+;;; https://gist.github.com/huytd/6b785bdaeb595401d69adc7797e5c22c#file-init-el
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -22,6 +23,10 @@
 ;; enable line number
 (global-linum-mode t)
 
+;; Other configs
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
 ;; UI configurations
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
@@ -30,20 +35,48 @@
 (add-to-list 'default-frame-alist '(font . "Iosevka-22"))
 (add-to-list 'default-frame-alist '(height . 24))
 (add-to-list 'default-frame-alist '(width . 80))
-(setq ring-bell-function 'ignore)
+(setq ring-bell-function 'ignore) ;; disable deep sound
+(mouse-wheel-mode -1) ;; disable mouse scrool
 
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+;; editor config
+(use-package evil-escape
+  :ensure t
+  :init
+  (setq-default evil-escape-key-sequence "jj")
+  (setq-default evil-escape-delay 0.15)
+  :config
+  (evil-escape-mode 1))
+
+;; editor config
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 ;; Vim mode
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-C-u-scroll t)
+  (when evil-want-C-u-scroll
+   (define-key evil-insert-state-map (kbd "C-u") 'evil-scroll-up)
+   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+   (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+   (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
   :config
   (evil-mode 1))
 
 (use-package evil-escape
   :ensure t
   :init
-  (setq-default evil-escape-key-sequence "jk")
-  (setq-default evil-escape-delay 0.2)
+  (setq-default evil-escape-key-sequence "jj")
+  (setq-default evil-escape-delay 0.15)
   :config
   (evil-escape-mode 1))
 
@@ -121,15 +154,12 @@
   :init (global-flycheck-mode))
 
 ;; Powerline
-(use-package spaceline
+(use-package airline-themes
+  :ensure t)
+
+(use-package powerline
   :ensure t
-  :init
-  (setq powerline-default-separator 'slant)
-  :config
-  (spaceline-emacs-theme)
-  (spaceline-toggle-minor-modes-off)
-  (spaceline-toggle-buffer-size-off)
-  (spaceline-toggle-evil-state-on))
+  :config (load-theme 'airline-doom-one))
 
 ;; Custom keybinding
 (use-package general
@@ -164,8 +194,6 @@
   "at"  '(ansi-term :which-key "open terminal")
   ))
 
-;;(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-;;(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
 (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
 (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
 (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
@@ -184,6 +212,11 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 (use-package tern :ensure t)
+
+(use-package json-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode)))
 
  ;; Typescript
 (use-package typescript-mode
@@ -205,11 +238,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (helm evil-escape evil))))
+ '(custom-safe-themes
+   (quote
+    ("a94f1a015878c5f00afab321e4fef124b2fc3b823c8ddd89d360d710fc2bddfc" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "b59d7adea7873d58160d368d42828e7ac670340f11f36f67fa8071dbf957236a" default)))
+ '(package-selected-packages (quote (airline-themes helm evil-escape evil)))
+ '(recentf-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
