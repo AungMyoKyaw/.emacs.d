@@ -1,5 +1,7 @@
+*#
+*~
 todo/
 auto-save-list/
 elpa/
-*#
-*~
+projectile-bookmarks.eld
+recentf

@@ -111,6 +111,7 @@
   :init
   (setq projectile-require-project-root nil)
   :config
+  (setq projectile-project-search-path '("~/Desktop/AungMyoKyaw/" "~/Desktop/WORK/"))
   (projectile-mode 1))
 
 ;; Helm Projectile
@@ -152,14 +153,6 @@
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
-
-;; Powerline
-(use-package airline-themes
-  :ensure t)
-
-(use-package powerline
-  :ensure t
-  :config (load-theme 'airline-doom-one))
 
 ;; Custom keybinding
 (use-package general
@@ -240,12 +233,18 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("a94f1a015878c5f00afab321e4fef124b2fc3b823c8ddd89d360d710fc2bddfc" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "b59d7adea7873d58160d368d42828e7ac670340f11f36f67fa8071dbf957236a" default)))
- '(package-selected-packages (quote (airline-themes helm evil-escape evil)))
- '(recentf-mode t))
+    ("a94f1a015878c5f00afab321e4fef124b2fc3b823c8ddd89d360d710fc2bddfc" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Powerline
+(use-package airline-themes
+  :ensure t)
+
+(use-package powerline
+  :ensure t
+  :config (load-theme 'airline-doom-one))
